@@ -4,9 +4,9 @@ local function copyResource(file)
 end
 
 function Header(el)
-  copyResource('sidebar_test.png')
+  copyResource('sidebar.png')
   if not el.attributes['background-image'] then
-    el.attributes['background-image'] = 'sidebar_test.png'
+    el.attributes['background-image'] = 'sidebar.png'
     el.attributes['background-size'] = '5% 100%'
     el.attributes['background-position'] = 'left'
   end
