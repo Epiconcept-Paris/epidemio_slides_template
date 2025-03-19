@@ -4,5 +4,8 @@
 
 Quarto 1.3.0 or later
 
-## Usage
+## Example
+
+![Screenshot of quarto theme for epidemio team](slide.png)
+
 
