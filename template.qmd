@@ -6,17 +6,19 @@ author: Yohann Mansiaux
 date: last-modified
 ---
 
-# Introduction 
+# Transition slide: use a level 1 title
 
-## Slide title
+## "Standard" slide: use a level 2 title
 
 Hello World.
 
-If you wish to know more about slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
+If you wish to know more about producing slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
 
 ## Content
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+# Use code
 
 ## Code
 
@@ -24,3 +26,215 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 #| echo: true
 print("hello world")
 ```
+
+## **Code with annotation**
+
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+penguins |> # <1>
+  mutate( # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm # <2>
+  ) # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+
+
+## **Highlighted code**
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers='1,2,4,7'}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+
+::::
+
+## **Highlighted code (progressively)**
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers="1|2|4,7"}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+
+:::
+
+::::
+
+# Multiple columns
+
+## **Use columns**
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#multiple-columns>
+
+::: {.columns}
+::: {.column width="30%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+:::
+::: {.column width="70%"}
+
+```{r eval = FALSE, echo=TRUE}
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+::::
+
+
+## 3 columns
+
+::: {.columns}
+::: {.column  width="33%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+ui <- fluidPage(
+  ...
+)
+```
+
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+server <-
+ function(input,
+          output,
+          session) {
+  ...
+}
+```
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+shiny::runApp()
+```
+:::
+::::
+
+# Images
+
+## Images with absolute position
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position>
+
+![](epiconcept_img1.svg){.absolute top=200 left=0 width="350" height="300"}
+
+![](epiconcept_img2.svg){.absolute top=100 right=50 width="450" height="250"}
+
+![](epiconcept_img3.svg){.absolute bottom=0 right=50 width="300" height="300"}
+
+
+
+# Lists
+
+## List by default
+
+By default number and bullet lists within slides are displayed all at once.
+
+- Eat spaghetti
+- Drink wine
+
+## Incremental list
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#incremental-lists>
+
+
+You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode. 
+
+::: {.incremental}
+- Eat spaghetti
+- Drink wine
+:::
+
+
+# Tabs
+
+## Tabs demo
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#tabsets>
+
+::: {.panel-tabset}
+
+### Tab A
+
+Content for `Tab A`
+
+### Tab B
+
+Content for `Tab B`
+
+:::
+
+# Equations
+
+## Adding latex equations
+
+- Inline equations: $E = mc^{2}$
+  
+- Display equations: $$E = mc^{2}$$
+
+
+# Components
+
+
+## Call-outs
+
+5 call outs can be used: 
+
+`note`, `tip`, `warning`, `caution`, and `important`.
+
+:::{.callout-warning}
+Warning
+:::
+
+:::{.callout-note}
+Note
+:::
+
+:::{.callout-tip}
+Tip
+:::
+
+:::{.callout-caution}
+Caution
+:::
+
+:::{.callout-important}
+Important
+:::
