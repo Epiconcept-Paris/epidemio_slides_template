@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.40">
 
   <meta name="author" content="Yohann Mansiaux">
-  <meta name="dcterms.date" content="2025-03-19">
+  <meta name="dcterms.date" content="2025-03-20">
   <title>Epiconcept qmd template</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="template_files/libs/revealjs/dist/theme/quarto-cd3754d46b939cc50ebdb2f46481e806.css">
+  <link rel="stylesheet" href="template_files/libs/revealjs/dist/theme/quarto-20da1a44bc985bd1e0aee219adce6d07.css">
   <link rel="stylesheet" href="_extensions/Epiconcept-Paris/epidemioslides/fonts.css">
   <link href="template_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="template_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -198,23 +198,28 @@
     <div class="half-section">
       <h1 class="title">Epiconcept qmd template</h1>
                   <p class="author">Yohann Mansiaux</p>
-                        <p class="date">2025-03-19</p>
+                        <p class="date">2025-03-20</p>
           </div>
   </div>
 </section>
 <section>
-<section id="introduction" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
-<h1>Introduction</h1>
+<section id="transition-slide-use-a-level-1-title" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Transition slide: use a level 1 title</h1>
 
 </section>
-<section id="slide-title" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
-<h2>Slide title</h2>
+<section id="standard-slide-use-a-level-2-title" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>“Standard” slide: use a level 2 title</h2>
 <p>Hello World.</p>
 <p>If you wish to know more about slides with Quarto, please visit <a href="https://quarto.org/docs/presentations/revealjs/" class="uri">https://quarto.org/docs/presentations/revealjs/</a></p>
 </section>
 <section id="content" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
 <h2>Content</h2>
 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+</section></section>
+<section>
+<section id="use-code" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Use code</h1>
+
 </section>
 <section id="code" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
 <h2>Code</h2>
@@ -222,6 +227,240 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"hello world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello world"</code></pre>
+</div>
+</div>
+</section>
+<section id="code-with-annotation" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2><strong>Code with annotation</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2" onclick="event.preventDefault();" href="">2</a><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">bill_ratio =</span> bill_depth_mm <span class="sc">/</span> bill_length_mm,</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bill_area  =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a>  )</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="1">Take <code>penguins</code>, and then,</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="4,5,6,7" data-code-annotation="2">add new columns for the bill ratio and bill area.</span>
+</dd>
+</dl>
+</div>
+</div>
+</section>
+<section id="highlighted-code" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2><strong>Highlighted code</strong></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb3" data-code-line-numbers="1,2,4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href=""></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb3-3"><a href=""></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-5"><a href=""></a>    <span class="at">bill_ratio =</span> bill_depth_mm <span class="sc">/</span> bill_length_mm,</span>
+<span id="cb3-6"><a href=""></a>    <span class="at">bill_area  =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm</span>
+<span id="cb3-7"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section>
+<section id="highlighted-code-progressively" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2><strong>Highlighted code (progressively)</strong></h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb4" data-code-line-numbers="1|2|4,7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a href=""></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb4-3"><a href=""></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-5"><a href=""></a>    <span class="at">bill_ratio =</span> bill_depth_mm <span class="sc">/</span> bill_length_mm,</span>
+<span id="cb4-6"><a href=""></a>    <span class="at">bill_area  =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm</span>
+<span id="cb4-7"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div>
+</section></section>
+<section>
+<section id="multiple-columns" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Multiple columns</h1>
+
+</section>
+<section id="use-columns" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2><strong>Use columns</strong></h2>
+<p><a href="https://prerelease.quarto.org/docs/presentations/revealjs/#multiple-columns" class="uri">https://prerelease.quarto.org/docs/presentations/revealjs/#multiple-columns</a></p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:70%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">bill_ratio =</span> bill_depth_mm <span class="sc">/</span> bill_length_mm,</span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">bill_area  =</span> bill_depth_mm <span class="sc">*</span> bill_length_mm</span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section>
+<section id="columns" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>3 columns</h2>
+<div class="columns">
+<div class="column" style="width:33%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a> <span class="cf">function</span>(input,</span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>          output,</span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a>          session) {</span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>shiny<span class="sc">::</span><span class="fu">runApp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div></div>
+</section></section>
+<section>
+<section id="images" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Images</h1>
+
+</section>
+<section id="images-with-absolute-position" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>Images with absolute position</h2>
+<p><a href="https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position" class="uri">https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position</a></p>
+<p><img data-src="epiconcept_img1.svg" class="absolute" style="top: 200px; left: 0px; width: 350px; height: 300px; "></p>
+<p><img data-src="epiconcept_img2.svg" class="absolute" style="top: 100px; right: 50px; width: 450px; height: 250px; "></p>
+<p><img data-src="epiconcept_img3.svg" class="absolute" style="bottom: 0px; right: 50px; width: 300px; height: 300px; "></p>
+</section></section>
+<section>
+<section id="lists" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Lists</h1>
+
+</section>
+<section id="list-by-default" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>List by default</h2>
+<p>By default number and bullet lists within slides are displayed all at once.</p>
+<ul>
+<li>Eat spaghetti</li>
+<li>Drink wine</li>
+</ul>
+</section>
+<section id="incremental-list" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>Incremental list</h2>
+<p><a href="https://prerelease.quarto.org/docs/presentations/revealjs/#incremental-lists" class="uri">https://prerelease.quarto.org/docs/presentations/revealjs/#incremental-lists</a></p>
+<p>You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode.</p>
+<div>
+<ul>
+<li class="fragment">Eat spaghetti</li>
+<li class="fragment">Drink wine</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="tabs" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Tabs</h1>
+
+</section>
+<section id="tabs-demo" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>Tabs demo</h2>
+<p><a href="https://prerelease.quarto.org/docs/presentations/revealjs/#tabsets" class="uri">https://prerelease.quarto.org/docs/presentations/revealjs/#tabsets</a></p>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Tab A</a></li><li><a href="#tabset-1-2">Tab B</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<p>Content for <code>Tab A</code></p>
+</div>
+<div id="tabset-1-2">
+<p>Content for <code>Tab B</code></p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="components" class="title-slide slide level1 center" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h1>Components</h1>
+
+</section>
+<section id="call-outs" class="slide level2" data-background-image="sidebar.png" data-background-size="5% 100%" data-background-position="left">
+<h2>Call-outs</h2>
+<p>5 call outs can be used:</p>
+<p><code>note</code>, <code>tip</code>, <code>warning</code>, <code>caution</code>, and <code>important</code>.</p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Warning</strong></p>
+</div>
+<div class="callout-content">
+<p>Warning</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Note</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Tip</p>
+</div>
+</div>
+</div>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Caution</strong></p>
+</div>
+<div class="callout-content">
+<p>Caution</p>
+</div>
+</div>
+</div>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Important</p>
+</div>
 </div>
 </div>
 
