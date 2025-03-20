@@ -12,7 +12,7 @@ date: last-modified
 
 Hello World.
 
-If you wish to know more about slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
+If you wish to know more about producing slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
 
 ## Content
 
@@ -200,6 +200,15 @@ Content for `Tab A`
 Content for `Tab B`
 
 :::
+
+# Equations
+
+## Adding latex equations
+
+- Inline equations: $E = mc^{2}$
+  
+- Display equations: $$E = mc^{2}$$
+
 
 # Components
 
