@@ -6,9 +6,9 @@ author: Yohann Mansiaux
 date: last-modified
 ---
 
-# Introduction 
+# Transition slide: use a level 1 title
 
-## Slide title
+## "Standard" slide: use a level 2 title
 
 Hello World.
 
@@ -18,9 +18,208 @@ If you wish to know more about slides with Quarto, please visit <https://quarto.
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
 
+# Use code
+
 ## Code
 
 ```{r}
 #| echo: true
 print("hello world")
 ```
+
+## **Code with annotation**
+
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+penguins |> # <1>
+  mutate( # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm # <2>
+  ) # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+
+
+## **Highlighted code**
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers='1,2,4,7'}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+
+::::
+
+## **Highlighted code (progressively)**
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers="1|2|4,7"}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+
+:::
+
+::::
+
+
+## **Use columns**
+
+::: {.columns}
+::: {.column width="30%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+:::
+::: {.column width="70%"}
+
+```{r eval = FALSE, echo=TRUE}
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+::::
+
+
+## 3 columns
+
+::: {.columns}
+::: {.column  width="33%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+ui <- fluidPage(
+  ...
+)
+```
+
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+server <-
+ function(input,
+          output,
+          session) {
+  ...
+}
+```
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+shiny::runApp()
+```
+:::
+::::
+
+## Align text
+
+:::: {.columns}
+::: {.column width="33%"}
+By default text is left aligned.
+:::
+
+::: {.column .center-items width="33%"}
+It can be centered by using the `center-items` class.
+:::
+
+::: {.column .right-items width="33%"}
+It can also be right-align by using the `right-items` class.
+:::
+::::
+
+# Lists
+
+## List by default
+
+- Eat spaghetti
+- Drink wine
+
+## Incremental list
+
+By default number and bullet lists within slides are displayed all at once.
+
+You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode. 
+
+::: {.incremental}
+- Eat spaghetti
+- Drink wine
+:::
+
+
+# Tabs
+
+## Tabs demo
+
+::: {.panel-tabset}
+
+### Tab A
+
+Content for `Tab A`
+
+### Tab B
+
+Content for `Tab B`
+
+:::
+
+# Components
+
+
+## Call-outs
+
+5 call outs can be used: 
+
+`note`, `tip`, `warning`, `caution`, and `important`.
+
+:::{.callout-warning}
+Warning
+:::
+
+:::{.callout-note}
+Note
+:::
+
+:::{.callout-tip}
+Tip
+:::
+
+:::{.callout-caution}
+Caution
+:::
+
+:::{.callout-important}
+Important
+:::

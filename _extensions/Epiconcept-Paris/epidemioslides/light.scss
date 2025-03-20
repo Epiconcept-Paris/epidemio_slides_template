@@ -36,6 +36,15 @@ $presentation-h3-font-size: 1.75em;
 /*-- scss:rules --*/
 .reveal {
 
+  .center-items {
+    text-align: center;
+  }
+  
+  .right-items {
+    text-align: right;
+  }
+  
+
   h1, h2 {
     color: $epiconcept_bleu_fonce !important;
     font-weight: bold;
@@ -108,5 +117,7 @@ $presentation-h3-font-size: 1.75em;
   div.sourceCode pre code.has-line-highlights>span:not(.highlight-line) {
     opacity: 0.25 !important;
   }
+
+  
 
 }
