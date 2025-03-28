@@ -40,6 +40,14 @@ $presentation-h3-font-size: 1.75em;
     text-align: center;
   }
   
+  .v-center-content {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+
   .right-items {
     text-align: right;
   }
