@@ -1,10 +1,33 @@
 ---
-title: Epiconcept qmd template
+title: Epidemiology of "messy" code 
+subtitle: A review of non-pharmaceutical interventions to improve code quality and reproducibility in epidemiology
 format:
   epidemioslides-revealjs: default
 author: Yohann Mansiaux
 date: last-modified
 ---
+
+# Preambule
+
+## The Epidemiology of Code
+
+Just as we study the patterns, causes, and effects of health conditions in populations, we can examine the "health" of our code! Today, I'll share my journey of identifying common patterns and implementing helpful practices - **recognizing that we're all doing our best with the resources and knowledge we have.**
+
+:::{.callout-important}
+We all develop coding habits based on what we've learned and what gets the job done. There's no shame in how code evolves - we're scientists first, not software engineers!
+:::
+
+# Our today clinical case
+
+## VEBIS-EHR-VE
+
+- 
+
+
+:::{.callout-important}
+Most of the elements we'll discuss today are not reserved to profesionnal coders. They are useful for anyone who writes code, even if it's just for a one-off analysis !
+:::
+
 
 # Transition slide: use a level 1 title
 

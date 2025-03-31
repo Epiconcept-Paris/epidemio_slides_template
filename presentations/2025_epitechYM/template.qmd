@@ -1,0 +1,580 @@
+---
+title: Epidemiology of "messy" code 
+subtitle: A review of non-pharmaceutical interventions to improve code quality and reproducibility in epidemiology
+format:
+  epidemioslides-revealjs: default
+author: Yohann Mansiaux
+date: last-modified
+---
+
+# Preambule
+
+## The Epidemiology of Code
+
+Just as we study the patterns, causes, and effects of health conditions in populations, we can examine the "health" of our code! 
+
+
+Today, I'll share my journey of identifying common patterns and implementing helpful practices - **recognizing that we're all doing our best with the resources and knowledge we have.**
+
+<br />
+
+:::{.callout-important}
+We all develop coding habits based on what we've learned and what gets the job done. There's no shame in how code evolves - we're scientists first, not software engineers!
+:::
+
+<br />
+
+:::{.callout-important}
+Producing clean, documented and reproducible code is not reserved to professional coders !
+:::
+
+# Our today clinical case
+
+## The patient: VEBIS-EHR-VE
+
+- A codebase dedicated to the production of reports presenting COVID-19 vaccines effectiveness.
+- The code starts from Excel files sent by the study sites
+  -  Extracts the populations characteristics
+  -  Extract Cox models results
+  -  Computes pooled estimates using meta-analysis regression
+  -  ...
+
+![](external_img/01-VEBISEHRVE.png)
+
+## This patient suffers from many conditions:
+
+- **Global Variable Syndrome (GVS)**: Variables appearing and changing mysteriously across the environment
+  
+- **Acute Documentation Deficiency (ADD)**: Code with no context or explanation
+  
+- **Chronic Repetition Disorder (CRD)**: The same calculations copy-pasted across multiple scripts
+  
+- **Hard-Coding Disease (HCD)**: Brittle file paths and parameters embedded throughout the code
+  
+-**Code Hoarding Disorder (CHD)**. It's characterized by the persistent difficulty in discarding or deleting unused code files, despite their lack of current value to the project. It is also called the `analysis_v2_final_FINAL_realFinal_USE_THIS_ONE.R` disease.
+
+## Risk factors for these diseases:
+
+- Time pressure: "We need these results yesterday!"
+- Code isolation: Each researcher working in separate environments
+- Lack of exposure to coding best practices
+- Lack of confidence with version control with Git
+- Asymptomatic carriers: Code that "works" but harbors hidden bugs
+- PTSD : Prior traumatic experiences of accidentally deleting needed code or fear of reviewer requests requiring resurrection of old analyses
+
+## What is expected from me on VEBIS-EHR-VE?
+
+Ok this patient is performing quite well at its everyday tasks, but we think it might be able to do better !
+
+![](external_img/02-expected_tasks.png)
+
+**Ok ... so first things to do could be to try to run the last version of the code and see what happens ... !**
+
+_Spoiler: it failed !_
+
+
+## To save you some time, a quick summary of my first days working at Epiconcept
+
+::: {.center-items}
+
+![](external_img/200w.gif){width="30%"}
+
+**"Hi James, can you help me ?"**
+
+Thanks again for your patience James 🙏
+
+:::
+
+# Patient's disease #1
+
+# **Acute Documentation Deficiency (ADD)**
+
+If we jump back to the repo main page: 
+
+![](external_img/01-VEBISEHRVE.png)
+
+The README is empty ! 
+
+The README is the first contact of a user with the code. I would have liked an overview of the project, its purpose, and how to use it, with an example I can copy and paste.
+
+## **Acute Documentation Deficiency (ADD)**
+
+**Update from James !**
+
+The last version of the code is not in the "main" branch of the GitHub repository, but in the "update_v2" branch. 
+
+I would have expected to have the "production" code in to the main branch, but it's another subject !
+
+![](external_img/03-readme_branchV2.png)
+
+The README has not been updated in the last 2 years. Is it still valid ?
+
+
+## **Acute Documentation Deficiency (ADD)**
+
+_"Ok well, James told me that the most important script was `main.R`, I'll take a look at this script !"_
+
+```r
+# Project Name  : VEBIS-EHR-VE
+# Script Name   : main.R
+# Summary       : main script to call all other specific scripts 
+# Date created  : 2022-07-07
+# Author        : EPICONCEPT (M.DIOUF/M.MAUREL/J.HUMPHREYS) & ISCIII (S.MONGE/M.FONTAN-VELA)
+# Date reviewed : 2022 - 11 - 15
+# Reviewed by   : ISCIII (S.MONGE)
+# Modified by   : EPICONCEPT (J.HUMPHREYS)
+# Date modified : 2023-11-06
+
+# Description : 
+# The main.R script file calls all files for the VEBIS-EHR-VE in order to produce an automatized monthly report.
+# 
+# The source data are in the Google shared drives in the folder "1_EPI/0. EPI shared extern. folders/VE - Reports - R markdown/sources data".
+# They are organised by month-year. One file corresponds to the VE estimates for one study site.
+# There is one sheet per outcome, each sheet contains the estimates grouped by the age groups of interest.
+
+
+# set date of report
+#reporting_dates <- list("2024-01-01","2024-02-01","2024-03-01","2024-04-01","2024-05-01","2024-06-01","2024-07-01","2024-08-01","2024-09-01","2024-10-01","2024-11-01","2024-12-01")
+#reporting_dates <- list("2024-03-01","2024-04-01","2024-05-01","2024-06-01", "2024-07-01","2024-08-01","2024-09-01","2024-10-01","2024-11-01","2024-12-01")
+#reporting_dates <- list("2001-04-01")
+
+
+reporting_dates <- list("2025-01-01")
+# set report types (2001 always cumulative)
+if(grepl("2001", reporting_dates[[1]])){
+  required_report_types <- c("cumulative")
+  
+} else {
+  required_report_types <- c("short", "long")
+}
+
+cumulative_period <- ""
+
+for(date in reporting_dates){
+  # START of the script -----------------------------------------------------
+  
+  # 1. Select month of REPORT, by default it is the month before the month of data analysis
+  # Default can be override by manually assigning as reference date, any date in the desired month of report
+  
+  input_date <- as.Date(date)
+  
+  
+  # 2. Include config.R file ---------------------------------------------------
+  # The config.R file loads all the needed libraries, sets the different paths used in the project and
+  # defines global variables to run the VEBIS-EHR-VE project.
+  if (! file.exists("config.R")) {
+    stop("main.R script should be run from root directory")
+  }
+  source("config.R")
+  
+  
+  # 3. (OPTIONAL) Download source data ---------------------------------------------------
+  # The download_estimates.R file downloads all Excels from site-estimates from the Google Drive (source data).
+  # You will need to specify with which account you want to log in into Google Drive
+  # The first time to run it you will need to give all permisions to see & modify files from the Google Drive in a pop-up window
+  #sourceFile("PREPARE", "download_estimates.R")
+
+  # 4. Import VE estimates -----------------------------------------------------
+  # Study sites send their VE results every month in an Excel file.
+  # First source data are archived in "SOURCES"/sites data/country before being renamed as Country_monthmonth.xlsx (for example: Denmark_octnov.xlsx)
+  # in the corresponding month-year folder on the shared Drive.
+  # VE estimates imported are saved in the project's data folder by outcome and by month-year in .rds format.
+  # The output file name is "outcome_month_VEBIS_lot4_age_estimates.rds".
+  # if(input_date == "2001-06-01"){
+  #   sourceFile("PREPARE", "import_estimates_secondary.R")
+  # } else {
+  #   sourceFile("PREPARE", "import_estimates.R")
+  # }
+
+  # 5. Meta-analysis -----------------------------------------------------------
+  # Run the meta-analysis, save table results by outcome and by month-year in Excel format and
+  # generate forest plot by outcome and by age group for each model.
+  # The script uses the mymeta_function.R file for conducting the meta-analysis and drawing forest plots.
+  # Results (Excel file and plots) are saved in the results folder per outcome and month-year.
+  # The Excel file name is "Result_outcome_month.xlsx".
+  #sourceFile("PREPARE", "meta_analysis_fix_random.R")
+
+
+  # 6. Import meta-analysis VE results -----------------------------------------
+  # VE results saved in Excel tables from the meta-analysis for each outcome are imported.
+  # For an outcome, a reporting month/year and a model, 2 files are saved in the data folder: "res_data_model.rds" and "res_descr_data_model.rds".
+  # IMPORTANT: ALL EXCEL FILES TO BE IMPORTED NEED TO BE CLOSED WHEN RUNNING THE SCRIPT
+  #sourceFile("PREPARE", "import_results.R")
+
+
+  # 7. Results report ----------------------------------------------------------
+
+  # 7.1.A Results report (html) ------------------------------------------------
+  # Produce the monthly report with descriptive table, pooled VE trends over time plots and tables,
+  # pooled VE estimates plots and tables per outcome.
+  # Currently set to only produce the 'short' report, though this may now become the main/sole monthly output.
+
+  sourceFile("COMPILE", "EHR_VE_results_report.R")
+}
+
+
+
+# END of the script -------------------------------------------------------
+```
+
+## Autopsy of the `main.R` script
+
+My thought after my first contact with this script :
+
+- Last modified on 2023-11-06
+  
+_Doesn't seem very recent, surprising for an ongoing project_
+  
+- So many commented lines 
+  
+_I don't know if they are useful or not, but I feel like I need to read them all to understand the script (and to read all the scripts that are sourced, and all the scripts that are sourced by these sources scripts ...). (James was about to learn very soon one of my mantra : **REMOVE DEAD CODE**)._
+
+My thoughts at that moment: 
+
+- How would I have be able to work on it if James had left the company and that I was replacing him?
+- How James could have been able to work on it all by himself?
+- How would I have been able to work on it if I had to come back to it in 6 months?
+- If I got hit by a bus tomorrow, how would the next person be able to work on it?
+
+
+# Patient's disease #2: **Global Variable Syndrome (GVS)**
+
+## **Global Variable Syndrome (GVS)**
+
+I've understood that `config.R` is also a very important script to set up a reporting project.
+
+A >200 lines script:
+- creating paths to folders of interest to read data and save results
+- setting global parameters used throughout the files
+- 
+
+```r
+# Other global parameters used throughout the files ---------------------------
+
+outcomes <- c(
+  "Hospitalization",
+  "COVID19_Death"
+  )
+
+# Current age groups
+agegroups <- c("65-79", "80")
+
+colnames <- c("estimate_txt", "N", "person_days", "events", 
+              "crude_point", "crude_lower", "crude_upper", 
+              "adj1_point", "adj1_lower", "adj1_upper", 
+              "adj2_point", "adj2_lower", "adj2_upper",
+              "adj3_point", "adj3_lower", "adj3_upper")
+
+# 0. Customize time for the analysis. 
+# The customize_time.R file contains all variables that need to be customized to run the scripts in a selected time frame.
+# It contains default values if the analysis month is the previous to the month running the script. Otherwise, we need to override the default.
+# No further changes need to be done monthly in individual script to adapt it monthly.
+sourceFile("PREPARE", "customize_time.R")
+
+
+# Commented non-submitting countries for testing, remove when all received (except Lux, no longer participating)
+sites <- c("Belgium"
+             ,"Denmark"
+            # "Luxembourg" # No longer submitting data
+             ,"Navarra"
+             ,"Norway"
+             ,"Portugal"
+             ,"Italy"
+            # ,"Netherlands" # After Feb 24 not submitting data
+            ,"Sweden" # Feb 24 only so far
+           )
+
+
+# Liliana added 22/09/2022
+# Create folders if they don't exist based on outcomes and study periods
+folders_to_create <- c(paste(getPath("DATA"),outcomes,sep="/"),
+                       paste(getPath("DATA"),sort(rep(outcomes,length(outcomes))),rep(reporting_month,length(outcomes)),sep="/"),
+                       paste(getPath("RESULTS"),outcomes,sep="/"),
+                       paste(getPath("RESULTS"),sort(rep(outcomes,length(outcomes))),rep(reporting_month,length(outcomes)),sep="/"))
+lapply(folders_to_create,
+       function(x) if(!dir.exists(x)) dir.create(x))
+
+
+# Estimate orders until Nov 23 without reference category for each model
+pos_overall <- c(2,3)
+pos_time <- c(5,7)
+pos_relat <- c(9,11)
+
+# Estimate orders after Nov 23 without reference category for each model :
+pos_model <- list(pos_model3 = c(2,6))
+subtitles <- c(" . VE of seasonal vaccination versus unvaccinated")
+
+if(input_date=="2001-06-01"){
+  pos_model <- list(pos_model3 = c(2,5), pos_model4 = c(7,10), pos_model5 = c(12,15), pos_model6 = c(17,20))
+}
+
+# Reference rows' estimate order
+ref.est.order <- c()
+for(i in 1:length(pos_model)){
+  ref.est.order <- c(ref.est.order, pos_model[[i]][1]-1)
+}
+
+
+# ecdc_color <- rgb(105, 174, 35, maxColorValue = 255)
+
+# Effects type for the meta-analysis
+effect <- c("random"
+            # , "fix"
+            )
+
+
+# De-activate scientific notation
+options(scipen = 999) 
+
+
+TOKEEP <- c("TOKEEP", "reference_date", "input_date", "reporting_month", "last_month", "study_period", "study_period_abr", "study_period_txt", "sites", "colnames",
+            "outcomes", "agegroups", "subtitles", "effect", "reporting_month_plot_over_time", "monthyear", "end_period",
+            "pos_overall", "pos_time", "pos_relat", "pos_model","ref.est.order","study_period_title","required_report_types","cumulative_period")
+```
+
+
+# My plan
+
+Being able to reproduce the analysis with a less messy code
+
+# Transition slide: use a level 1 title
+
+## "Standard" slide: use a level 2 title
+
+Hello World.
+
+If you wish to know more about producing slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
+
+## Content
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+## Verically centered content
+
+::: {.v-center-content}
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+
+:::
+
+# Use code
+
+## Code
+
+```{r}
+#| echo: true
+print("hello world")
+```
+
+## **Code with annotation**
+
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+penguins |> # <1>
+  mutate( # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm # <2>
+  ) # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+
+
+## **Highlighted code**
+
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers='1,2,4,7'}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+
+::::
+
+## **Highlighted code (progressively)**
+
+::: {.columns}
+::: {.column width="50%"}
+
+```{.r code-line-numbers="1|2|4,7"}
+library(tidyverse)
+library(palmerpenguins)
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+
+:::
+
+::::
+
+# Multiple columns
+
+## **Use columns**
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#multiple-columns>
+
+::: {.columns}
+::: {.column width="30%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(tidyverse)
+library(palmerpenguins)
+```
+
+:::
+::: {.column width="70%"}
+
+```{r eval = FALSE, echo=TRUE}
+penguins |>
+  mutate(
+    bill_ratio = bill_depth_mm / bill_length_mm,
+    bill_area  = bill_depth_mm * bill_length_mm
+  )
+```
+:::
+::::
+
+
+## 3 columns
+
+::: {.columns}
+::: {.column  width="33%"}
+
+```{r eval = FALSE, echo=TRUE}
+library(shiny)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+ui <- fluidPage(
+  ...
+)
+```
+
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+server <-
+ function(input,
+          output,
+          session) {
+  ...
+}
+```
+:::
+::: {.column width="33%"}
+
+
+```{r eval = FALSE, echo=TRUE}
+shiny::runApp()
+```
+:::
+::::
+
+# Images
+
+## Images with absolute position
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position>
+
+![](external_img/epiconcept_img1.svg){.absolute top=200 left=0 width="350" height="300"}
+
+![](external_img/epiconcept_img2.svg){.absolute top=100 right=50 width="450" height="250"}
+
+![](external_img/epiconcept_img3.svg){.absolute bottom=0 right=50 width="300" height="300"}
+
+
+
+# Lists
+
+## List by default
+
+By default number and bullet lists within slides are displayed all at once.
+
+- Eat spaghetti
+- Drink wine
+
+## Incremental list
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#incremental-lists>
+
+
+You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode. 
+
+::: {.incremental}
+- Eat spaghetti
+- Drink wine
+:::
+
+
+# Tabs
+
+## Tabs demo
+
+<https://prerelease.quarto.org/docs/presentations/revealjs/#tabsets>
+
+::: {.panel-tabset}
+
+### Tab A
+
+Content for `Tab A`
+
+### Tab B
+
+Content for `Tab B`
+
+:::
+
+# Equations
+
+## Adding latex equations
+
+- Inline equations: $E = mc^{2}$
+  
+- Display equations: $$E = mc^{2}$$
+
+
+# Components
+
+
+## Call-outs
+
+5 call outs can be used: 
+
+`note`, `tip`, `warning`, `caution`, and `important`.
+
+:::{.callout-warning}
+Warning
+:::
+
+:::{.callout-note}
+Note
+:::
+
+:::{.callout-tip}
+Tip
+:::
+
+:::{.callout-caution}
+Caution
+:::
+
+:::{.callout-important}
+Important
+:::
+
