@@ -1,2 +1,4 @@
 template_files/*
 /.luarc.json
+template.html
+README_files/*

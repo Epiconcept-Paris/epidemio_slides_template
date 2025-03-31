@@ -161,11 +161,11 @@ shiny::runApp()
 
 <https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position>
 
-![](epiconcept_img1.svg){.absolute top=200 left=0 width="350" height="300"}
+![](external_img/epiconcept_img1.svg){.absolute top=200 left=0 width="350" height="300"}
 
-![](epiconcept_img2.svg){.absolute top=100 right=50 width="450" height="250"}
+![](external_img/epiconcept_img2.svg){.absolute top=100 right=50 width="450" height="250"}
 
-![](epiconcept_img3.svg){.absolute bottom=0 right=50 width="300" height="300"}
+![](external_img/epiconcept_img3.svg){.absolute bottom=0 right=50 width="300" height="300"}
 
 
 
