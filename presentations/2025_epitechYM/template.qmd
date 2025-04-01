@@ -43,15 +43,15 @@ Producing clean, documented and reproducible code is not reserved to professiona
 
 ## This patient suffers from many conditions:
 
-- **Global Variable Syndrome (GVS)**: Variables appearing and changing mysteriously across the environment
-  
 - **Acute Documentation Deficiency (ADD)**: Code with no context or explanation
+
+- **Global Variable Syndrome (GVS)**: Variables appearing and changing mysteriously across the environment
   
 - **Chronic Repetition Disorder (CRD)**: The same calculations copy-pasted across multiple scripts
   
 - **Hard-Coding Disease (HCD)**: Brittle file paths and parameters embedded throughout the code
   
--**Code Hoarding Disorder (CHD)**. It's characterized by the persistent difficulty in discarding or deleting unused code files, despite their lack of current value to the project. It is also called the `analysis_v2_final_FINAL_realFinal_USE_THIS_ONE.R` disease.
+- **Code Hoarding Disorder (CHD)**. It's characterized by the persistent difficulty in discarding or deleting unused code files, despite their lack of current value to the project. It is also called the `analysis_v2_final_FINAL_realFinal_USE_THIS_ONE.R` disease.
 
 ## Risk factors for these diseases:
 
@@ -87,7 +87,7 @@ Thanks again for your patience James 🙏
 
 # Patient's disease #1
 
-# **Acute Documentation Deficiency (ADD)**
+## **Acute Documentation Deficiency (ADD)**
 
 If we jump back to the repo main page: 
 
@@ -227,7 +227,7 @@ _Doesn't seem very recent, surprising for an ongoing project_
   
 - So many commented lines 
   
-_I don't know if they are useful or not, but I feel like I need to read them all to understand the script (and to read all the scripts that are sourced, and all the scripts that are sourced by these sources scripts ...). (James was about to learn very soon one of my mantra : **REMOVE DEAD CODE**)._
+_I don't know if they are useful or not, but I feel like I need to read them all to understand the script (and to read all the scripts that are sourced, and all the scripts that are sourced by these sources scripts ...)._
 
 My thoughts at that moment: 
 
@@ -331,6 +331,99 @@ TOKEEP <- c("TOKEEP", "reference_date", "input_date", "reporting_month", "last_m
             "outcomes", "agegroups", "subtitles", "effect", "reporting_month_plot_over_time", "monthyear", "end_period",
             "pos_overall", "pos_time", "pos_relat", "pos_model","ref.est.order","study_period_title","required_report_types","cumulative_period")
 ```
+
+## **Global Variable Syndrome (GVS)**
+
+`config.R` is sourcing another file called `customize_time.R`, which creates a lot of variables related to the reporting period, which are used EVERYWHERE in the codebase.
+
+Let's find the occurence of the object "reporting_month" (would need 2-3 slides to show them all):
+
+![](external_img/04-find_reporting_month.png)
+
+This parameter (among the long list of other global parameters) could be modified elsewhere, could be not, if modified : in which scripts ? It's very hard to track.
+
+
+# Patient's disease #3
+
+##  **Chronic Repetition Disorder (CRD)**
+
+There are many elements that are repeated many times in the codebase. Concrete example:
+
+In the codebase we are doing some operations if the number of events is below 5.
+
+![](external_img/05-events_below_5_repetitions.png)
+
+Mantra #2: **DRY** (Don't Repeat Yourself) -> "If you have to copy and paste, you must write a function".
+
+("And if you write a function, you can create a package", but it will come later !)
+
+# Patient's disease #4
+
+## **Hard-Coding Disease (HCD)**
+
+Hard-coding is the practice of embedding data directly into the code, rather than obtaining it from external sources or parameters. This disease if often concomitant with the **Global Variable Syndrome (GVS)** and the **Chronic Repetition Disorder (CRD)**.
+
+Remember the `config.R` file? In which we were defining age classes ?
+
+```r
+# Current age groups
+agegroups <- c("65-79", "80")
+```
+
+We don't expect this age groups redefined in the codebase, but it is:
+
+![](external_img/06-age_classes_everywhere.png)
+
+## **Hard-Coding Disease (HCD)**
+
+This example is a direct consequence of another curse: the **Moving Data Fever (MDF)**, in which data format and shape change over time.
+
+Let's look at the way we are reading the Excel files sent by the study sites:
+
+```r
+group <- c("65-79", "80")
+firstline <- 6
+lengthlines <- 5
+distancelines <- 14
+
+for(g in 1:length(groups)) {
+startline <- firstline+((g-1)*distancelines)
+    if(reporting_month=="jan24"|reporting_month=="feb24"|reporting_month=="mar24"){          
+     tmp <- data.frame(readxl::read_excel(
+                       path = "some_file.xlsx",
+                       sheet="Hospitalization",
+                       range = paste0("B", startline, ":N", startline+lengthlines))
+        }
+  #### 
+  if(reporting_month == "another_month") {
+    # use other positions !!
+  }
+} 
+```
+
+# Patient's disease #5
+
+## **Code Hoarding Disorder (CHD)**
+
+This disease has many symptoms:
+
+- Keep "old" version of a function, because "we never know, it might be useful one day"
+
+![](external_img/08-my_table_trends_long.png)
+
+- Keep "old" scripts, because "I spent 2 days writing it, no way I can put it in the trash"
+
+![](external_img/07-archive.png)[]
+ 
+
+- Keep "objects" in the code, used nowhere, but still in the environment, because "I don't know if I will need them later" (e.g some objects defined in `config.R`)
+
+
+
+Mantra #2: **REMOVE DEAD CODE**
+
+Git is here to help you to keep track of the code evolution. If you need to go back to a previous version, you can do it with Git !
+
 
 
 # My plan
