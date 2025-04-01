@@ -62,6 +62,12 @@ Producing clean, documented and reproducible code is not reserved to professiona
 - Asymptomatic carriers: Code that "works" but harbors hidden bugs
 - PTSD : Prior traumatic experiences of accidentally deleting needed code or fear of reviewer requests requiring resurrection of old analyses
 
+<br />
+
+**Natural History of Disease**
+
+Like many chronic conditions, these problems developed gradually. What began as a simple analysis script mutated into a complex, interdependent system with no clear structure.
+
 ## What is expected from me on VEBIS-EHR-VE?
 
 Ok this patient is performing quite well at its everyday tasks, but we think it might be able to do better !
@@ -224,17 +230,30 @@ My thought after my first contact with this script :
 - Last modified on 2023-11-06
   
 _Doesn't seem very recent, surprising for an ongoing project_
+
+:::{.center-items}
+
+![](external_img/documentation.jpg){width="30%"}
   
+:::
+
 - So many commented lines 
   
 _I don't know if they are useful or not, but I feel like I need to read them all to understand the script (and to read all the scripts that are sourced, and all the scripts that are sourced by these sources scripts ...)._
 
-My thoughts at that moment: 
+## My thoughts at that moment
 
 - How would I have be able to work on it if James had left the company and that I was replacing him?
+
 - How James could have been able to work on it all by himself?
-- How would I have been able to work on it if I had to come back to it in 6 months?
+
 - If I got hit by a bus tomorrow, how would the next person be able to work on it?
+
+:::{.center-items}
+
+![](external_img/drowning.jpg){width="50%"}
+  
+:::
 
 
 # Patient's disease #2: **Global Variable Syndrome (GVS)**
@@ -396,7 +415,7 @@ startline <- firstline+((g-1)*distancelines)
         }
   #### 
   if(reporting_month == "another_month") {
-    # use other positions !!
+    # use other indices !!
   }
 } 
 ```
@@ -405,269 +424,369 @@ startline <- firstline+((g-1)*distancelines)
 
 ## **Code Hoarding Disorder (CHD)**
 
-This disease has many symptoms:
-
 - Keep "old" version of a function, because "we never know, it might be useful one day"
 
-![](external_img/08-my_table_trends_long.png)
+![](external_img/08-my_table_trends_long.png){height="75px"}
 
 - Keep "old" scripts, because "I spent 2 days writing it, no way I can put it in the trash"
 
-![](external_img/07-archive.png)[]
+![](external_img/07-archive.png){height="150px"}
  
 
-- Keep "objects" in the code, used nowhere, but still in the environment, because "I don't know if I will need them later" (e.g some objects defined in `config.R`)
-
-
+- Keep "objects" in the code, used nowhere, but kept, because "I don't know if I will need them later" (e.g some objects defined in `config.R`)
 
 Mantra #2: **REMOVE DEAD CODE**
 
 Git is here to help you to keep track of the code evolution. If you need to go back to a previous version, you can do it with Git !
 
+# Conclusion of the clinical case
 
+:::: {.columns}
 
-# My plan
-
-Being able to reproduce the analysis with a less messy code
-
-# Transition slide: use a level 1 title
-
-## "Standard" slide: use a level 2 title
-
-Hello World.
-
-If you wish to know more about producing slides with Quarto, please visit <https://quarto.org/docs/presentations/revealjs/>
-
-## Content
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-
-## Verically centered content
-
-::: {.v-center-content}
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-
-:::
-
-# Use code
-
-## Code
-
-```{r}
-#| echo: true
-print("hello world")
-```
-
-## **Code with annotation**
-
-```{r eval=FALSE, echo=TRUE}
-library(tidyverse)
-library(palmerpenguins)
-penguins |> # <1>
-  mutate( # <2>
-    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
-    bill_area  = bill_depth_mm * bill_length_mm # <2>
-  ) # <2>
-```
-
-1. Take `penguins`, and then,
-2. add new columns for the bill ratio and bill area.
-
-
-## **Highlighted code**
-
-
-::: {.columns}
 ::: {.column width="50%"}
 
-```{.r code-line-numbers='1,2,4,7'}
-library(tidyverse)
-library(palmerpenguins)
-penguins |>
-  mutate(
-    bill_ratio = bill_depth_mm / bill_length_mm,
-    bill_area  = bill_depth_mm * bill_length_mm
-  )
-```
-:::
+Developing new features for our codebase is challenging because it has:
 
+- low or now documentation
+- many global variables, hard to track and modify
+- many repetitions of the same code, hard to maintain
+- hard-coded parameters, hard to modify
+- many unused code, hard to understand
+- many scripts, hard to find the right one
+
+:::
+::: {.column width="50%"}
+![](external_img/crying.gif)
+:::
 ::::
 
-## **Highlighted code (progressively)**
+# But ...
+
+With James besides me, I had a plan to try to cure this multi pathologic patient:
+
+![](external_img/meme_muscles.jpg)
+  
+
+# Curing our patient: The R package therapy approach
+
+## The R package therapy approach
+
+My goal was to be able to reproduce the last version report, but within a robust framework, dedicated to control the propagation of the diseases listed before.
+
+The R package therapy approach is a way to structure the codebase, to make it more robust and easier to maintain.
+
+It comes with some "constraints", but it is a good way to make sure that the code is reproducible and that it can be used by other people :
+
+- your code must be organized in a specific way, with function only. Flying scripts are not allowed anymore.
+- you need to document your code, with roxygen2 comments and vignettes
+- you can use Git to manage the code evolution
+- other cool stuffs to be shown after
+
+## For Acute Documentation Deficiency (ADD)
+
+- **Documentation**: Add a README file to explain the project, its purpose, and how to use it. 
+  - Benefit: Future users (and future-you) can quickly understand the project
+  
+- **Function Documentation**: Use roxygen2 to document functions and parameters
+  - Benefit: Clear understanding of function purpose, inputs, and outputs
+  
+- **Vignettes: ** Create vignettes to provide examples and use cases for the package
+  - Benefit: Users can see practical applications of the package
+
+- **NEWS.md**: Keep track of changes and updates to the package
+  - Benefit: Users can see what has changed and when, helping them understand the evolution of the package
 
 ::: {.columns}
+
+::: {.column width="50%"}
+<br />
+<br />
+<br />
+<br />
+**The hardest part of the job according to me !**
+
+:::
+
+
 ::: {.column width="50%"}
 
-```{.r code-line-numbers="1|2|4,7"}
-library(tidyverse)
-library(palmerpenguins)
-penguins |>
-  mutate(
-    bill_ratio = bill_depth_mm / bill_length_mm,
-    bill_area  = bill_depth_mm * bill_length_mm
-  )
-```
+![](external_img/documentation_luigi.jpg)
 
 :::
 
 ::::
 
-# Multiple columns
 
-## **Use columns**
+## For Global Variable Syndrome (GVS) and Hard-Coding Disease (HCD)
 
-<https://prerelease.quarto.org/docs/presentations/revealjs/#multiple-columns>
+- **Remove Global Variables**: Move from global variables to function parameters
+  - Benefit: Code behavior becomes predictable and explicit, making it easier to understand and maintain
+  
+For example, instead of using a global variable for the reporting month, pass it as a parameter to functions that need it.
 
-::: {.columns}
-::: {.column width="30%"}
+- **Use Parameters Instead of Hardcoding**: Avoid hardcoding values in the codebase
+  - Benefit: Code becomes more flexible and adaptable to different situations
 
-```{r eval = FALSE, echo=TRUE}
-library(tidyverse)
-library(palmerpenguins)
-```
+
+:::{.center-items}
+
+![](external_img/spongebob.jpg){width="30%"}
+  
+:::
+
+
+## For Hard-Coding Disease (HCD)
+
+<br />
+
+### REMOVE DEAD CODE
+
+Quite easy and one of my favorite part of the job !
+
+- **Remove Unused Code**: Identify and remove code that is no longer used or needed
+  - Benefit: Cleaner codebase, easier to understand and maintain
+  - Example: Remove old functions, scripts, and objects that are not used in the current codebase
+  - Example: Remove commented-out code that is no longer relevant
+
+:::{.center-items}
+
+![](external_img/leatherface-texas-chainsaw.gif)
+ 
+:::
+
+
+## For Moving Data Fever (MDF)
+
+☎️ James called me some day: 
+
+_"Hey, from now the study sites deliver the data not only in Excel files, but also in RDS files. Could be a good opportunity to work with more consistent data !!"_
+
+(maybe he already told me that before, but sometime he speaks too fast for me to understand everything)
+
+<br />
+
+- Excel files are human-readable but are really bad at storing data for programmatic use.
+
+- RDS files (a R specific format) are not really human-readable but are a great way to store data  --> **that's what we want !**
+
+
+<br />
+
+### Big decision !
+
+Instead of trying to adapt the existing code to read the new format, I've decided to start from scratch a new codebase to produce the reports.
+
+:::{.center-items}
+
+![](external_img/excited.gif)
 
 :::
-::: {.column width="70%"}
 
-```{r eval = FALSE, echo=TRUE}
-penguins |>
-  mutate(
-    bill_ratio = bill_depth_mm / bill_length_mm,
-    bill_area  = bill_depth_mm * bill_length_mm
-  )
-```
-:::
-::::
+# Time to code !
 
+:::{.center-items}
 
-## 3 columns
-
-::: {.columns}
-::: {.column  width="33%"}
-
-```{r eval = FALSE, echo=TRUE}
-library(shiny)
-library(dplyr)
-library(ggplot2)
-library(readr)
-
-ui <- fluidPage(
-  ...
-)
-```
+![](external_img/200w.gif){width="30%"}
 
 :::
-::: {.column width="33%"}
+
+## After a few weeks of coding ...
+
+:::{.center-items}
+
+![](external_img/09-released.png){}
+
+:::
+
+## Is our patient healthy now ?
+
+Let's take a look at the repo !
+
+<https://epiconcept-paris.github.io/VEBIS-EHR-VE_reborn/>
+
+## Ok the documentation is cool, but what about the code ?
+
+- Every piece of code is now a R function, with unit test to ensure its behaviour is correct (will introduce it in a moment)
+
+- Unused code removed, no more commented-out code
+
+- No more global variables, no more hard-coded parameters, no more flying scripts.
+
+- Our code doesn't contain any hardcoded age classes or other similar hardcoded stratification anymore ! 
+
+**The code automatically adapts to the data, and not the opposite !**
+
+_How did we manage to do that ? With the "metadata" table approach !_
+
+## The "metadata" table approach
+
+The first time we are reading our RDS files, we are processing them to create a "metadata" table, which contains all the information we need to know about the data and we recode the original data according to the metadata table.
+
+![](external_img/10-metadata.png){width="50%"}
+
+## Let's talk a bit about coding method: KISS
+
+Mantra #3: **KISS (Keep It Simple, Stupid)**
+
+We are trying to keep our functions as simple as possible, with a single purpose.
+
+If the task is too complex, we break it down into smaller functions.
+
+Let's take the example of a forest plot, present in a monthly report:
+
+![](external_img/11-forestplot.png){width="50%"}
 
 
-```{r eval = FALSE, echo=TRUE}
-server <-
- function(input,
-          output,
-          session) {
-  ...
+## Let's talk a bit about coding method: KISS
+
+Many tasks have to be realised to produce this plot:
+
+- Read population characteristics data: to get the number of vaccinated / unvaccinated
+- Get models results
+- Compute vaccine effectiveness from models results
+- Compute time since vaccination statistics
+- Format the results to be displayed in the plot
+- Create the plot
+- ....
+
+We need to structure our mental model to divide the tasks into smaller tasks:
+
+- The code is easier to read and understand
+- The code is easier to test and debug
+- The code is easier to maintain and evolve
+
+**A task is a function, a function is a task**
+
+## When a function is simple you can write unit tests !
+
+**What the hell are unit tests ?**
+
+Unit tests can be seen as a way to check that the code is doing what it is supposed to do:
+
+- Does my code returns the expected output ?
+- Does my code returns the expected error ?
+- Does my code returns the expected message ?
+
+Let's get back to the forest plot example:
+
+- We need to compute the time since vaccination statistics (median, IQR) in several groups. 
+
+- We write a R code to do that:
+
+```r
+compute_time_since_vaccination <- function(data, some_groups) {
+  # R code to do the job
 }
 ```
-:::
-::: {.column width="33%"}
+
+## How to test my function ?
+
+- Once my R code is written, I can prepare synthetic data, i.e a data frame in which I will have fake TSV data, some groups (e.g age classes, study sites)
+
+- I run my function on this synthetic data, and I check that the output is what I expect.
+
+<br />
+
+- **Writing unit tests consists in writing expectations**
+
+- In R we use `expect_xxx()` functions:
+  - `expect_equal()` to check that the output is equal to the expected output
+  - `expect_error()` to check that the function returns an error
+  - `expect_message()` to check that the function returns a message
+  - ...
+
+<br />
+
+**This seems stupid, but being sure that your code does the job it is supposed to do is a great mental relief !**
+
+## Unit tests as an surveillance system
+
+Unit tests are good monitors of the quality of your code when you write it. 
+
+But it also acts as a surveillance system, to detect problems early, understand their causes, and prevent widespread impact.
+
+Unit tests, will systematically monitor for bugs, regressions, and other issues that may arise as the codebase evolves !
 
 
-```{r eval = FALSE, echo=TRUE}
-shiny::runApp()
-```
-:::
-::::
+:::{.center-items}
 
-# Images
-
-## Images with absolute position
-
-<https://prerelease.quarto.org/docs/presentations/revealjs/advanced.html#absolute-position>
-
-![](external_img/epiconcept_img1.svg){.absolute top=200 left=0 width="350" height="300"}
-
-![](external_img/epiconcept_img2.svg){.absolute top=100 right=50 width="450" height="250"}
-
-![](external_img/epiconcept_img3.svg){.absolute bottom=0 right=50 width="300" height="300"}
-
-
-
-# Lists
-
-## List by default
-
-By default number and bullet lists within slides are displayed all at once.
-
-- Eat spaghetti
-- Drink wine
-
-## Incremental list
-
-<https://prerelease.quarto.org/docs/presentations/revealjs/#incremental-lists>
-
-
-You can also explicitly make any list incremental or non-incremental by surrounding it in a div with an explicit class that determines the mode. 
-
-::: {.incremental}
-- Eat spaghetti
-- Drink wine
-:::
-
-
-# Tabs
-
-## Tabs demo
-
-<https://prerelease.quarto.org/docs/presentations/revealjs/#tabsets>
-
-::: {.panel-tabset}
-
-### Tab A
-
-Content for `Tab A`
-
-### Tab B
-
-Content for `Tab B`
+![](external_img/unit_tests.jpg){}
 
 :::
 
-# Equations
+## Unit tests save your life !
 
-## Adding latex equations
+- Some day, Baltazar is calling me. He finds it takes too much time to run a complete report. 😠
+- "Ok boss, I'll try to optimize it"  🚀
+- I switch some data wrangling operations made with the R package `dplyr` to the R package `data.table`, which is faster for large data sets. 🖥️
+- I run my report code again. The results have changed 😱
+- Could come from the cleaning RDS file process, the meta analysis results, the function producing the tables ... it will require a lot of time to investigate ! 🤓
 
-- Inline equations: $E = mc^{2}$
-  
-- Display equations: $$E = mc^{2}$$
+<br />
+<br />
+
+**Good news:** I have written unit tests for all my functions, so I can run them to check that the output is still the same as before.
+
+- Some test is failing, I can check the code and understand what is wrong.
+- It seems that the `data.table` package is not doing the same thing as the `dplyr` package for this specific operation. I can fix it and run the tests again to check that everything is working as expected !
+- I am relieved, I can go back to my boss and tell him that the report is ready ! 🍾
 
 
-# Components
 
 
-## Call-outs
+## Our usage of Git
 
-5 call outs can be used: 
 
-`note`, `tip`, `warning`, `caution`, and `important`.
 
-:::{.callout-warning}
-Warning
-:::
 
-:::{.callout-note}
-Note
-:::
 
-:::{.callout-tip}
-Tip
-:::
+Parler de la documentation, des tests unitaires ...
+Du schéma de versionnement sur git
+Du fonctionnement en issues, avec James, Baltazar et Alexandre
 
-:::{.callout-caution}
-Caution
-:::
 
-:::{.callout-important}
-Important
-:::
 
+
+## Conclusion
+
+Vous pouvez le faire !
+On culbabilise pas car chacun fait comme il peut en fonction de son temps, de ses connaissances 
+
+Résister à la tentation du quick and diry aujourdrhui et promis je corrigerai plus tard
+
+
+
+
+
+## Truc
+
+### 2. The Journey: Small Steps, Big Impact
+
+- **Documentation**: Start with simple comments that evolved into function documentation
+  - Show a "before and after" example with roxygen2 comments
+  - Highlight how this helps future-you and others understand code purpose
+
+- **Functions**: Moving from script mode to function mode
+  - Example: Transforming repeated code blocks into reusable functions
+  - Benefit: Easier testing, debugging, and maintenance
+
+- **Removing Global Variables**: The path to reproducibility
+  - Example: Moving from globals to function parameters
+  - Benefit: Code behavior becomes predictable and explicit
+
+- **Addressing Hardcoded Elements**: Making code flexible
+  - Example: Parameters instead of hardcoded paths/values
+  - Benefit: Code works across environments and for different analyses
+
+### 3. Packaging: Bringing It All Together
+
+- Simple package structure and its advantages
+  - Organization: Code, documentation, tests in expected locations
+  - Dependency management: Explicit imports
+  - Version control: Tracking what changed when
+
+
+
+### Examples can be copied and pasted from documentation for otther purposes
+
+### Montrer le repo GH avec les branches et les issues
