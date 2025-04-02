@@ -45,13 +45,22 @@ Producing clean, documented and reproducible code is not reserved to professiona
 
 - **Acute Documentation Deficiency (ADD)**: Code with no context or explanation
 
+<br />
+
 - **Global Variable Syndrome (GVS)**: Variables appearing and changing mysteriously across the environment
   
+<br />
+
+
 - **Chronic Repetition Disorder (CRD)**: The same calculations copy-pasted across multiple scripts
-  
+
+<br />
+
 - **Hard-Coding Disease (HCD)**: Brittle file paths and parameters embedded throughout the code
-  
-- **Code Hoarding Disorder (CHD)**. It's characterized by the persistent difficulty in discarding or deleting unused code files, despite their lack of current value to the project. It is also called the `analysis_v2_final_FINAL_realFinal_USE_THIS_ONE.R` disease.
+
+<br />
+
+- **Code Hoarding Disorder (CHD)**. It's characterized by the persistent difficulty in discarding or deleting unused code files, despite their lack of current value to the project. It is also called the `analysis_v2_final_FINAL_realFinal_USE_THIS_ONE.R` disease. Frequently co-occuring with **Version Control Avoidance Syndrome (VCAS)** or **I-push-everything-to-the-main-branch-syndrome-because-YOLO** (too long acronym).
 
 ## Risk factors for these diseases:
 
@@ -642,7 +651,7 @@ Let's take the example of a forest plot, present in a monthly report:
 Many tasks have to be realised to produce this plot:
 
 - Read population characteristics data: to get the number of vaccinated / unvaccinated
-- Get models results
+- Get models results for each site / Compute pooled results
 - Compute vaccine effectiveness from models results
 - Compute time since vaccination statistics
 - Format the results to be displayed in the plot
@@ -654,6 +663,7 @@ We need to structure our mental model to divide the tasks into smaller tasks:
 - The code is easier to read and understand
 - The code is easier to test and debug
 - The code is easier to maintain and evolve
+- The code is easier to reuse in other contexts
 
 **A task is a function, a function is a task**
 
@@ -687,17 +697,33 @@ compute_time_since_vaccination <- function(data, some_groups) {
 
 <br />
 
-- **Writing unit tests consists in writing expectations**
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Writing unit tests consists in writing expectations**
 
 - In R we use `expect_xxx()` functions:
   - `expect_equal()` to check that the output is equal to the expected output
   - `expect_error()` to check that the function returns an error
   - `expect_message()` to check that the function returns a message
   - ...
+:::
+
+::: {.column width="50%"}
+::: {.center-items}
+
+![](external_img/unit_tests.jpg){width="50%"}
+:::
+:::
+::::
+
 
 <br />
 
 **This seems stupid, but being sure that your code does the job it is supposed to do is a great mental relief !**
+
+
 
 ## Unit tests as an surveillance system
 
@@ -707,14 +733,15 @@ But it also acts as a surveillance system, to detect problems early, understand 
 
 Unit tests, will systematically monitor for bugs, regressions, and other issues that may arise as the codebase evolves !
 
+<br />
 
-:::{.center-items}
+**You won't be scared anymore of breaking something when implementing a new feature in your code !**
 
-![](external_img/unit_tests.jpg){}
 
-:::
 
 ## Unit tests save your life !
+
+Didn't happen so far, but could have:
 
 - Some day, Baltazar is calling me. He finds it takes too much time to run a complete report. 😠
 - "Ok boss, I'll try to optimize it"  🚀
@@ -731,19 +758,32 @@ Unit tests, will systematically monitor for bugs, regressions, and other issues 
 - It seems that the `data.table` package is not doing the same thing as the `dplyr` package for this specific operation. I can fix it and run the tests again to check that everything is working as expected !
 - I am relieved, I can go back to my boss and tell him that the report is ready ! 🍾
 
+## Our usage of Git
 
+The Github repository contains "branches", which are copies of the codebase.
 
+We were organized as follows:
+
+- the `main` branch is the production branch, which contains the code that is used to produce the reports. The code in this branch must be stable and tested.
+
+- the `dev` branch is the development branch, which contains the code that is being developed.
+
+- specific features development or bug fixes are done in specific branches, which are created from the `dev` branch. Once the feature is finished, it is merged into the `dev` branch.
+  
+- from times to times, the `dev` branch is merged into the `main` branch, to update the production code. The version number of the package is incremented at this time and a "release" is published (we save a copy of the codebase for a given version number).
 
 ## Our usage of Git
 
+Features requests, bug reports, and other tasks are managed with GitHub issues.
 
+No more random Google Chat messages or emails to track the tasks to be done.
 
+In a dev perspective, it helps to keep track of the tasks to be done, and to prioritize them.
 
+::: {.center-items}
 
-Parler de la documentation, des tests unitaires ...
-Du schéma de versionnement sur git
-Du fonctionnement en issues, avec James, Baltazar et Alexandre
-
+![](external_img/12-gh_issues.png){width="100%"}
+:::
 
 
 
