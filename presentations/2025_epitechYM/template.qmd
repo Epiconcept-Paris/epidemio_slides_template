@@ -13,24 +13,31 @@ date: last-modified
 
 Just as we study the patterns, causes, and effects of health conditions in populations, we can examine the "health" of our code! 
 
-
 Today, I'll share my journey of identifying common patterns and implementing helpful practices - **recognizing that we're all doing our best with the resources and knowledge we have.**
 
-<br />
-
-:::{.callout-important}
-We all develop coding habits based on what we've learned and what gets the job done. There's no shame in how code evolves - we're scientists first, not software engineers!
+:::: {.columns}
+::: {.column width="40%"}
+![](external_img/attention_please.jpg)
 :::
 
+::: {.column width="50%"}
 <br />
 
-:::{.callout-important}
-Producing clean, documented and reproducible code is not reserved to professional coders !
+- **This presentation is not meant to be preachy or judgmental. It's about sharing experiences and learning from each other !**
+- **We all develop coding habits based on what we've learned and what gets the job done. There's no shame in how code evolves - we're scientists first, not software engineers!**
+
+- **Producing clean, documented and reproducible code is not reserved to professional coders !**
+
 :::
+::::
+
 
 # Our today clinical case
 
 ## The patient: VEBIS-EHR-VE
+
+:::: {.columns}
+::: {.column width="40%"}
 
 - A codebase dedicated to the production of reports presenting COVID-19 vaccines effectiveness.
 - The code starts from Excel files sent by the study sites
@@ -38,8 +45,15 @@ Producing clean, documented and reproducible code is not reserved to professiona
   -  Extract Cox models results
   -  Computes pooled estimates using meta-analysis regression
   -  ...
+:::
 
+::: {.column width="60%"}
+::: {.center-items}
 ![](external_img/01-VEBISEHRVE.png)
+:::
+
+:::
+::::
 
 ## This patient suffers from many conditions:
 
@@ -69,13 +83,15 @@ Producing clean, documented and reproducible code is not reserved to professiona
 - Lack of exposure to coding best practices
 - Lack of confidence with version control with Git
 - Asymptomatic carriers: Code that "works" but harbors hidden bugs
-- PTSD : Prior traumatic experiences of accidentally deleting needed code or fear of reviewer requests requiring resurrection of old analyses
+- PTSD : Prior traumatic experiences of accidentally deleting needed code or reviewer requests requiring resurrection of old analyses
 
 <br />
 
 **Natural History of Disease**
 
 Like many chronic conditions, these problems developed gradually. What began as a simple analysis script mutated into a complex, interdependent system with no clear structure.
+
+We've all been there: "ok I'll do it quick and dirty for this time, but I promise I'll fix it later". But we never fix it.
 
 ## What is expected from me on VEBIS-EHR-VE?
 
@@ -368,7 +384,7 @@ Let's find the occurence of the object "reporting_month" (would need 2-3 slides 
 
 ![](external_img/04-find_reporting_month.png)
 
-This parameter (among the long list of other global parameters) could be modified elsewhere, could be not, if modified : in which scripts ? It's very hard to track.
+This parameter (among the long list of other global parameters) could be modified elsewhere, could be not. If it is modified : in which scripts ? It's very hard to track.
 
 
 # Patient's disease #3
@@ -381,9 +397,9 @@ In the codebase we are doing some operations if the number of events is below 5.
 
 ![](external_img/05-events_below_5_repetitions.png)
 
-Mantra #2: **DRY** (Don't Repeat Yourself) -> "If you have to copy and paste, you must write a function".
+Mantra #1: **DRY** (Don't Repeat Yourself) -> "From a copy/paste, write a function".
 
-("And if you write a function, you can create a package", but it will come later !)
+("From a function, create a package", but it will come later !)
 
 # Patient's disease #4
 
@@ -570,7 +586,7 @@ Quite easy and one of my favorite part of the job !
 
 _"Hey, from now the study sites deliver the data not only in Excel files, but also in RDS files. Could be a good opportunity to work with more consistent data !!"_
 
-(maybe he already told me that before, but sometime he speaks too fast for me to understand everything)
+(maybe he already told me that before, but sometimes he speaks too fast for me to understand everything)
 
 <br />
 
@@ -665,7 +681,7 @@ We need to structure our mental model to divide the tasks into smaller tasks:
 - The code is easier to maintain and evolve
 - The code is easier to reuse in other contexts
 
-**A task is a function, a function is a task**
+**A task -> a function, a function -> a task**
 
 ## When a function is simple you can write unit tests !
 
@@ -679,12 +695,12 @@ Unit tests can be seen as a way to check that the code is doing what it is suppo
 
 Let's get back to the forest plot example:
 
-- We need to compute the time since vaccination statistics (median, IQR) in several groups. 
+- We need to compute the time since vaccination statistics (median, IQR) in several groups (age classes, study sites, vaccination groups). 
 
 - We write a R code to do that:
 
 ```r
-compute_time_since_vaccination <- function(data, some_groups) {
+compute_time_since_vaccination_statistics <- function(data, some_groups) {
   # R code to do the job
 }
 ```
@@ -705,8 +721,8 @@ compute_time_since_vaccination <- function(data, some_groups) {
 
 - In R we use `expect_xxx()` functions:
   - `expect_equal()` to check that the output is equal to the expected output
-  - `expect_error()` to check that the function returns an error
-  - `expect_message()` to check that the function returns a message
+  - `expect_error()` to check that the function returns an error when it is supposed to (e.g the input data are empty)
+  - `expect_message()` to check that the function returns a message when it is supposed to (e.g when the calculations are finished)
   - ...
 :::
 
@@ -725,7 +741,7 @@ compute_time_since_vaccination <- function(data, some_groups) {
 
 
 
-## Unit tests as an surveillance system
+## Unit tests as an epidemiologic surveillance system
 
 Unit tests are good monitors of the quality of your code when you write it. 
 
@@ -762,8 +778,6 @@ Didn't happen so far, but could have:
 
 The Github repository contains "branches", which are copies of the codebase.
 
-We were organized as follows:
-
 - the `main` branch is the production branch, which contains the code that is used to produce the reports. The code in this branch must be stable and tested.
 
 - the `dev` branch is the development branch, which contains the code that is being developed.
@@ -771,6 +785,13 @@ We were organized as follows:
 - specific features development or bug fixes are done in specific branches, which are created from the `dev` branch. Once the feature is finished, it is merged into the `dev` branch.
   
 - from times to times, the `dev` branch is merged into the `main` branch, to update the production code. The version number of the package is incremented at this time and a "release" is published (we save a copy of the codebase for a given version number).
+
+::: {.center-items}
+
+![](external_img/git_workflow.png){width="50%"}
+:::
+
+
 
 ## Our usage of Git
 
@@ -785,48 +806,87 @@ In a dev perspective, it helps to keep track of the tasks to be done, and to pri
 ![](external_img/12-gh_issues.png){width="100%"}
 :::
 
+# The past, the present and the future !
+
+## The past and the present
+
+::: {.center-items}
+
+![](external_img/13-before_now.png){width="100%"}
+:::
+
+_**If I got hit by a bus tomorrow, would the next person be able to work on it?**_
+
+I hope so ! At least I hope it won't be too painful !
+
+## The future
+
+What we are hoping for the next months:
+
+- Historical data stored in a database, with a stable format over time, so we could compare the results over time and between sites
+
+- Automated data quality reports sent to study sites
+
+- Automated data retrieval when uploaded by the sites
+
+- Continuously documented and tested code to ensure its maintainability
+
+- Improving the codebase used by the study sites to produce the results used in the reports
+
+- Good practices adopted by as much members of the team as possible
 
 
-## Conclusion
+# Conclusion
 
-Vous pouvez le faire !
-On culbabilise pas car chacun fait comme il peut en fonction de son temps, de ses connaissances 
+## The Journey: Small Steps, Big Impact
 
-Résister à la tentation du quick and diry aujourdrhui et promis je corrigerai plus tard
-
-
-
-
-
-## Truc
-
-### 2. The Journey: Small Steps, Big Impact
-
-- **Documentation**: Start with simple comments that evolved into function documentation
-  - Show a "before and after" example with roxygen2 comments
-  - Highlight how this helps future-you and others understand code purpose
+- **Documentation**: Start with simple function documentation instead of writing comments in the code
+  - The future-you and others understand code purpose
 
 - **Functions**: Moving from script mode to function mode
-  - Example: Transforming repeated code blocks into reusable functions
-  - Benefit: Easier testing, debugging, and maintenance
+  - Easier testing, debugging, and maintenance
 
 - **Removing Global Variables**: The path to reproducibility
-  - Example: Moving from globals to function parameters
-  - Benefit: Code behavior becomes predictable and explicit
+  - Code behavior becomes predictable and explicit
 
 - **Addressing Hardcoded Elements**: Making code flexible
-  - Example: Parameters instead of hardcoded paths/values
-  - Benefit: Code works across environments and for different analyses
-
-### 3. Packaging: Bringing It All Together
-
-- Simple package structure and its advantages
-  - Organization: Code, documentation, tests in expected locations
-  - Dependency management: Explicit imports
-  - Version control: Tracking what changed when
+  - Code works across environments and for different analyses
 
 
+### The Practical Benefits
 
-### Examples can be copied and pasted from documentation for otther purposes
+- **Time savings**: "I spent 3 hours setting up the package, but saved 20+ hours in the following month"
+- **Reproducibility**: "We can now regenerate results from 6 months ago in minutes"
+- **Collaboration**: "New team members can contribute meaningful code in days rather than weeks"
+- **Reduced errors**: "We caught a critical calculation error thanks to our tests"
 
-### Montrer le repo GH avec les branches et les issues
+<br />
+
+**Less time spent in doing repetitive / annoying / stupid tasks is more time spent in doing fun stuff !**
+
+
+## You can do it !
+
+- **Be indulgent with yourself**: We all have different levels of experience and time constraints
+
+- **Resist to "the quick and dirty today, clean tomorrow" tentation**: We all know we never come back to clean our mess later
+
+- **Make it incremental**: You don't need to do everything at once
+
+- **Start with one function**: Pick a function you use often and document it
+
+- **Packages are for everyone**: You don't need to be a software engineer to create a package. A package can be a simple collection of functions that you use often.
+
+
+::: {.center-items}
+![](external_img/baby.jpg){width="50%"}
+:::
+
+
+## Need some help ?
+
+::: {.center-items}
+![](external_img/dog.jpg){width="50%"}
+:::
+
+_PS: This presentation has been made with a reproducible workflow using R and quarto. Wants to know more ? Let's talk about it !_
