@@ -799,7 +799,7 @@ Features requests, bug reports, and other tasks are managed with GitHub issues.
 
 No more random Google Chat messages or emails to track the tasks to be done.
 
-In a dev perspective, it helps to keep track of the tasks to be done, and to prioritize them.
+In a dev perspective, it helps to keep track of the tasks to be done, of the decisions we make, and to prioritize the work.
 
 ::: {.center-items}
 

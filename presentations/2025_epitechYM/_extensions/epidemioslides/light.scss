@@ -60,9 +60,12 @@ $presentation-h3-font-size: 1.75em;
   }
 
   .slide-number {
-    color: $epiconcept_gris !important;
+    color: black !important;
     font-size: $presentation-font-size-root;
     font-family: $presentation-heading-font;
+    bottom: 14px !important;
+    right: 50px !important;
+    top: unset !important;
   }
 
   #title-slide {
