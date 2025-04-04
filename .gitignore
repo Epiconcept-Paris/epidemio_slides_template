@@ -2,3 +2,8 @@ template_files/*
 /.luarc.json
 template.html
 README_files/*
+*.html
+*_files/
+.Rhistory
+.Rproj.user/
+*.Rproj
