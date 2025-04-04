@@ -1,20 +1,23 @@
 # Quarto RevealJS template for Epidemiology team
 
-## Requirement
+## Requirements
 
-- Quarto 1.3.0 or later
+- Quarto 1.6.0 or later
 
-If you don't have Quarto installed, please follow the instructions on the [Quarto website](https://quarto.org/docs/get-started/).
+If you don't have Quarto installed, please follow the instructions on the [Quarto website](https://quarto.org/docs/download/).
 
 - The R package "quarto"
+
+**For VSCode users**: A bug has been corrected late March 2025. Please install the "Pre-release" version (v1.7.20 as of 2025-04-04).
 
 ## Pre-requisites
 
 - R 4.0 or later
-- RStudio or VSCode (with the Quarto extension installed)
+- RStudio or VSCode
 - The R package "quarto"
 - Markdown syntax knowledge
 - Basic knowledge of HTML and CSS
+- Having read the [Get Started page of the Quarto doc](https://quarto.org/docs/get-started/) :)
 
 ## Usage
 
@@ -24,12 +27,9 @@ To start a new presentation, please run in a terminal (not the R console):
 quarto use template Epiconcept-Paris/epidemio_slides_template
 ```
 
-If you are a RStudio user, please look at the following video:
-
+If you are a RStudio user, please look at the [video tutorial](https://drive.google.com/file/d/1QivfD7vNxpqIDwTXePfWl55Dq4E5DUA3/view?usp=sharing).
 
 If you are a VSCode user, the steps to follow are basically the same (without the "project"). Please note that you also need to install the Quarto extension for VSCode.
-
-Please look at the following video:
 
 ## Customization
 
