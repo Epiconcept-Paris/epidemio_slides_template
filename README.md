@@ -29,7 +29,9 @@ quarto use template Epiconcept-Paris/epidemio_slides_template
 
 If you are a RStudio user, please look at the [video tutorial](https://drive.google.com/file/d/1QivfD7vNxpqIDwTXePfWl55Dq4E5DUA3/view?usp=sharing).
 
-If you are a VSCode user, the steps to follow are basically the same (without the "project"). Please note that you also need to install the Quarto extension for VSCode.
+If you are a VSCode user, the steps to follow are basically the same (without the "project"). Please note that you also need to install the Quarto extension for VSCode. Take a look at the [video tutorial](https://drive.google.com/file/d/10Ix3HHjxpPkFn7_WykEe6UvYpWYL30I8/view?usp=sharing).
+
+**Once your Quarto project is created, please restart VSCode.**
 
 ## Customization
 
